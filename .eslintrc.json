@@ -1,0 +1,10 @@
+{
+  "extends": ["next/core-web-vitals"],
+  "rules": {
+    "react/display-name": [0, { "ignoreTranspilerName": true }],
+    "react/no-children-prop": 0,
+    "@next/next/no-img-element": "off",
+    "@next/next/no-document-import-in-page": "off",
+    "@typescript-eslint/no-implicit-any": "off"
+  }
+}

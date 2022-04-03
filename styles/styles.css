@@ -1,0 +1,66 @@
+.rounded-md {
+  border-radius: 0.25rem !important;
+}
+
+.rehype-code-title + pre {
+  margin-top: 0;
+}
+
+pre::-webkit-scrollbar {
+  display: none;
+}
+
+pre {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+code[class*='language-'],
+pre[class*='language-'] {
+  font-family: 'Fira Code', monospace;
+  letter-spacing: -0.45px;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #10b981;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: #8b5cf6;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #f59e0b;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #3b82f6;
+}
+
+.token.function,
+.token.class-name {
+  color: #ec4899;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #f59e0b;
+}

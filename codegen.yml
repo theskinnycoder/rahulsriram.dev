@@ -1,0 +1,18 @@
+overwrite: true
+generates:
+  lib/graphcms/__generated__.ts:
+    schema: 'https://api-eu-central-1.graphcms.com/v2/ckq6frt2kcdgb01z00tned1ty/master'
+    documents: './lib/graphcms/queries.graphql'
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-document-nodes
+      - typescript-graphql-request
+config:
+  scalars:
+    DateTime: string
+    Time: string
+    Date: string
+    Hex: string
+    Json: string
+    Long: string

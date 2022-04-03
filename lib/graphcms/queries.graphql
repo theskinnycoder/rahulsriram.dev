@@ -1,0 +1,77 @@
+query GetAllArticles {
+  articles {
+    title
+    slug
+    excerpt
+    categories {
+      name
+      color {
+        hex
+      }
+    }
+    coverpic {
+      fileName
+      url
+      width
+      height
+    }
+    updatedAt
+  }
+}
+
+query GetAllArticlesByCategory($name: String!) {
+  category(where: { name: $name }) {
+    name
+    color {
+      hex
+    }
+    articles {
+      title
+      slug
+      excerpt
+      categories {
+        name
+        color {
+          hex
+        }
+      }
+      coverpic {
+        fileName
+        url
+        width
+        height
+      }
+      updatedAt
+    }
+  }
+}
+
+query GetAllCategories {
+  categories {
+    name
+    color {
+      hex
+    }
+  }
+}
+
+query GetSingleArticle($slug: String!) {
+  article(where: { slug: $slug }) {
+    title
+    excerpt
+    content
+    coverpic {
+      fileName
+      url
+      width
+      height
+    }
+    categories {
+      name
+      color {
+        hex
+      }
+    }
+    updatedAt
+  }
+}
