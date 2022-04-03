@@ -9,22 +9,25 @@ import {
 } from '@chakra-ui/react'
 import { formatDistanceToNow } from 'date-fns'
 import { useRouter } from 'next/router'
-import { useMemo } from 'react'
 import readingTime from 'reading-time'
 import useSWR from 'swr'
 import SocialShareButtons from '~/components/pages/blog/SocialShareButtons'
 import { GitHubIcon } from '~/icons'
-import { fetcher } from '~/lib/swr'
-import { Article } from '~/lib/graphcms/__generated__'
+import { Article, GetSingleArticleDocument } from '~/lib/graphcms/__generated__'
+import { getGqlString, graphqlFetcher } from '~/lib/swr'
+import { GRAPHCMS_END_POINT } from '~/utils/constants'
 
 export default function BlogDetails() {
   const { asPath, query } = useRouter()
-  const { data } = useSWR<{ post: Article }>(
-    `/api/blog/${query?.slug}`,
-    fetcher,
-  )
 
-  const post = useMemo(() => data?.post, [data])
+  const { data: post } = useSWR<Article>(
+    [
+      GRAPHCMS_END_POINT,
+      getGqlString(GetSingleArticleDocument),
+      { slug: query?.slug },
+    ],
+    graphqlFetcher,
+  )
 
   return (
     <Container

@@ -16,7 +16,8 @@ export default function MainLayout({ children }: MainLayoutProps) {
             align='center'
             justify='center'
             direction='column'
-            px={{ base: '4', md: '0' }}>
+            px={{ base: '4', md: '0' }}
+          >
             {children}
           </Flex>
         </Box>

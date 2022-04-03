@@ -13,14 +13,15 @@ import { useMemo, useState } from 'react'
 import useSWR from 'swr'
 import BlogPost from '~/components/pages/blog/BlogPost'
 import { SearchIcon } from '~/icons'
-import { fetcher } from '~/lib/swr'
-import { Article } from '~/lib/graphcms/__generated__'
+import { Article, GetAllArticlesDocument } from '~/lib/graphcms/__generated__'
+import { getGqlString, graphqlFetcher } from '~/lib/swr'
+import { GRAPHCMS_END_POINT } from '~/utils/constants'
 
 export default function BlogsListing() {
-  const { data } = useSWR<{ posts: Article[] }>('/api/blog', fetcher, {
-    suspense: true,
-  })
-  const posts = useMemo(() => data?.posts ?? [], [data])
+  const { data: posts } = useSWR<Article[]>(
+    [GRAPHCMS_END_POINT, getGqlString(GetAllArticlesDocument)],
+    graphqlFetcher,
+  )
 
   const [searchValue, setSearchValue] = useState('')
 

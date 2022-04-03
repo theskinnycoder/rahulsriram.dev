@@ -7,6 +7,6 @@
   "trailingComma": "all",
   "arrowParens": "avoid",
   "singleAttributePerLine": true,
-  "bracketSameLine": true,
+  "bracketSameLine": false,
   "printWidth": 80
 }

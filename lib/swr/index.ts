@@ -1,4 +1,5 @@
-import { GraphQLClient } from 'graphql-request'
+import { DocumentNode } from 'graphql'
+import request, { GraphQLClient, RequestDocument } from 'graphql-request'
 
 export const graphqlClient = (url: string, apiKey: string) =>
   new GraphQLClient(url, {
@@ -7,7 +8,14 @@ export const graphqlClient = (url: string, apiKey: string) =>
     }),
   })
 
-export async function fetcher(url: string) {
-  const res = await fetch(url)
-  return res.json()
+export function getGqlString(doc: DocumentNode) {
+  return doc?.loc?.source?.body!
+}
+
+export async function graphqlFetcher(
+  url: string,
+  query: RequestDocument,
+  variables: any = {},
+) {
+  return request(url, query, variables)
 }

@@ -1,26 +1,31 @@
 import { InferGetStaticPropsType } from 'next'
-import { SWRConfig } from 'swr'
+import { SWRConfig, unstable_serialize } from 'swr'
 import BlogsListing from '~/components/pages/blog/BlogsListing'
-import { BASE_URL } from '~/utils/constants'
+import { graphcmsClient } from '~/lib/graphcms'
+import { GetAllArticlesDocument } from '~/lib/graphcms/__generated__'
+import { getGqlString } from '~/lib/swr'
+import { GRAPHCMS_END_POINT } from '~/utils/constants'
 
 export default function BlogListPage({
   fallback,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <SWRConfig value={{ fallback, suspense: true }}>
+    <SWRConfig value={{ fallback }}>
       <BlogsListing />
     </SWRConfig>
   )
 }
 
 export async function getStaticProps() {
-  const res = await fetch(`${BASE_URL}/api/blog`)
-  const data = await res.json()
+  const { articles: posts } = await graphcmsClient.GetAllArticles()
 
   return {
     props: {
       fallback: {
-        '/api/blog': data,
+        [unstable_serialize([
+          GRAPHCMS_END_POINT,
+          getGqlString(GetAllArticlesDocument),
+        ])]: posts,
       },
     },
   }
