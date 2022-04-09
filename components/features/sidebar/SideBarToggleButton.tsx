@@ -1,35 +1,34 @@
-import { IconButton, useDisclosure } from '@chakra-ui/react'
+import { ActionIcon } from '@mantine/core'
+import { useState } from 'react'
 import { MenuIcon } from '~/icons'
 import SideBar from './SideBar'
 
 export default function SideBarToggleButton() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [opened, setOpened] = useState(false)
 
   return (
     <>
-      <IconButton
-        variant='ghost'
-        display={{ base: 'inline-block', md: 'none' }}
-        rounded='10px'
-        colorScheme='gray'
-        _hover={{
-          border: '2px solid',
-          borderColor: 'gray.600',
+      <ActionIcon
+        size='xl'
+        radius='md'
+        onClick={() => {
+          setOpened(true)
         }}
-        _dark={{
-          _hover: {
-            border: '2px solid',
-            borderColor: 'gray.300',
+        sx={{
+          display: 'inline-block',
+          '@media (min-width: 768px)': {
+            display: 'none',
           },
-          color: 'gray.300',
         }}
-        fontSize='xl'
-        color='gray.600'
-        onClick={onOpen}
-        icon={<MenuIcon />}
-        aria-label='Open SideBar'
+      >
+        <MenuIcon fontSize='20px' />
+      </ActionIcon>
+      <SideBar
+        opened={opened}
+        onClose={() => {
+          setOpened(false)
+        }}
       />
-      <SideBar isOpen={isOpen} onClose={onClose} />
     </>
   )
 }

@@ -1,13 +1,5 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  Icon,
-  IconButton,
-  Image,
-  Link,
-  Text,
-} from '@chakra-ui/react'
+import { ActionIcon, Anchor, Group, Stack, Text, Title } from '@mantine/core'
+import NextImage from 'next/image'
 import TypeWriter from 'react-typing-effect'
 import {
   ExtLinkIcon,
@@ -20,127 +12,160 @@ import {
 
 export default function HeroSection() {
   return (
-    <Flex
-      justify='space-between'
+    <Group
+      position='apart'
       align='center'
-      wrap='wrap'
-      w='full'
-      direction={{ base: 'row', md: 'row-reverse' }}>
-      <Image
-        mx={{ base: 'auto', md: '0' }}
+      mx='auto'
+      noWrap={false}
+      sx={{
+        flexDirection: 'row-reverse',
+        width: '100%',
+        '@media (max-width: 768px)': {
+          justifyContent: 'center',
+          flexDirection: 'row',
+        },
+      }}
+    >
+      <NextImage
         src='https://avatars.githubusercontent.com/u/64031854?v=4'
         alt='Rahul SriRam'
-        width={{ base: '180', md: '220' }}
-        height={{ base: '180', md: '220' }}
-        rounded='full'
-        my={{ base: '8', md: '0' }}
+        width='200px'
+        height='200px'
+        style={{
+          borderRadius: '50%',
+        }}
       />
-      <Flex
-        justify='center'
-        align='flex-start'
-        direction='column'
-        experimental_spaceY='4'>
-        <Box mx={{ base: 'auto', md: '0' }}>
-          <Heading as='h1' size='3xl' mb='1' ml='-1'>
-            Rahul SriRam
-          </Heading>
-          <Heading
-            as='h2'
-            fontWeight='medium'
-            size='md'
-            bgGradient='linear(to-r, pink.500, yellow.400, purple.500)'
-            bgClip='text'>
-            <TypeWriter
-              text={[
-                'Full-Stack SDE',
-                'Developer YouTuber',
-                'Programming Content Creator',
-                'Technical Writer',
-              ]}
-              eraseDelay={700}
-              eraseSpeed={110}
-              typingDelay={250}
-              speed={110}
-            />
-          </Heading>
-        </Box>
+      <Stack
+        py='lg'
+        spacing='xs'
+        sx={{
+          maxWidth: '68%',
+          '@media (max-width: 768px)': {
+            maxWidth: '100%',
+            alignItems: 'center',
+          },
+        }}
+      >
+        <Title
+          order={1}
+          sx={theme => ({
+            paddingBottom: 0,
+            marginBottom: 0,
+            color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+          })}
+        >
+          Rahul SriRam
+        </Title>
         <Text
-          fontWeight='medium'
-          maxW='md'
-          color='gray.700'
-          textAlign={['center', 'left']}
-          _dark={{
-            color: 'gray.300',
-            fontWeight: 'normal',
-          }}>
-          I am a Full Stack Developer &amp; YouTuber. I 💖 JavaScript. Associate
-          SDE at{' '}
-          <Link fontWeight='semibold' href='https://apxor.com' isExternal>
-            <Flex align='center' display='inline-flex'>
-              <span>Apxor Technology Solutions</span>{' '}
-              <Icon as={ExtLinkIcon} mx='2px' />
-            </Flex>
-          </Link>
+          component='h2'
+          variant='gradient'
+          gradient={{ from: 'red', to: 'yellow', deg: 45 }}
+          weight='600'
+          sx={{
+            paddingTop: 0,
+            marginTop: 0,
+          }}
+        >
+          <TypeWriter
+            text={[
+              'Full-Stack SDE',
+              'Developer YouTuber',
+              'Programming Content Creator',
+              'Technical Writer',
+            ]}
+            eraseDelay={700}
+            eraseSpeed={110}
+            typingDelay={250}
+            speed={110}
+          />
         </Text>
-        <Flex
-          align='center'
-          justify='center'
-          mx={{ base: 'auto', md: 0 }}
-          w='full'>
-          <Link href='https://github.com/theskinnycoder' isExternal>
-            <IconButton
-              colorScheme='gray'
-              variant='ghost'
-              aria-label='Visit my GitHub'
-              size='lg'
-              fontSize='2xl'
-              icon={<GitHubIcon />}
-            />
-          </Link>
-          <Link href='https://instagram.com/_rahul.sriram_' isExternal>
-            <IconButton
-              colorScheme='purple'
-              variant='ghost'
-              aria-label='Visit my Insta'
-              size='lg'
-              fontSize='2xl'
-              icon={<InstagramIcon />}
-            />
-          </Link>
-          <Link href='https://twitter.com/theskinnycoder' isExternal>
-            <IconButton
-              colorScheme='twitter'
-              variant='ghost'
-              aria-label='Visit my Twitter'
-              size='lg'
-              fontSize='2xl'
-              icon={<TwitterIcon />}
-            />
-          </Link>
-          <Link
+        <Text
+          sx={{
+            '@media (max-width: 768px)': {
+              textAlign: 'center',
+            },
+          }}
+        >
+          Full Stack Developer &amp; YouTuber. <br />
+          Associate SDE at{' '}
+          <Anchor
+            sx={theme => ({
+              color: theme.colorScheme === 'light' ? 'black' : 'white',
+              fontWeight: '600',
+            })}
+            href='https://apxor.com'
+            target='_blank'
+          >
+            <Group
+              align='center'
+              spacing={0}
+              sx={{
+                display: 'inline-flex',
+              }}
+            >
+              <span>Apxor Technology Solutions</span>
+              <ExtLinkIcon />
+            </Group>
+          </Anchor>
+        </Text>
+        <Group align='center' spacing='xs'>
+          <ActionIcon
+            radius='md'
+            size='xl'
+            variant='hover'
+            component='a'
+            href='https://github.com/theskinnycoder'
+            target='_blank'
+            color='gray'
+          >
+            <GitHubIcon fontSize='25px' />
+          </ActionIcon>
+          <ActionIcon
+            size='xl'
+            radius='md'
+            variant='hover'
+            component='a'
+            href='https://instagram.com/_rahul.sriram_'
+            target='_blank'
+            color='violet'
+          >
+            <InstagramIcon fontSize='25px' />
+          </ActionIcon>
+          <ActionIcon
+            radius='md'
+            size='xl'
+            variant='hover'
+            component='a'
+            href='https://twitter.com/theskinnycoder'
+            target='_blank'
+            color='twitter'
+          >
+            <TwitterIcon fontSize='25px' />
+          </ActionIcon>
+          <ActionIcon
+            radius='md'
+            size='xl'
+            variant='hover'
+            component='a'
             href='https://www.linkedin.com/in/rahul-sriram-50a519173/'
-            isExternal>
-            <IconButton
-              colorScheme='linkedin'
-              variant='ghost'
-              aria-label='Visit my LinkedIn'
-              size='lg'
-              fontSize='2xl'
-              icon={<LinkedInIcon />}
-            />
-          </Link>
-          <Link href='https://youtube.com/c/TheSkinnyCoder' isExternal>
-            <IconButton
-              colorScheme='red'
-              variant='ghost'
-              aria-label='Visit my YouTube Channel'
-              size='lg'
-              fontSize='2xl'
-              icon={<YoutubeIcon />}
-            />
-          </Link>
-        </Flex>
-      </Flex>
-    </Flex>
+            target='_blank'
+            color='linkedin'
+          >
+            <LinkedInIcon fontSize='25px' />
+          </ActionIcon>
+          <ActionIcon
+            radius='md'
+            size='xl'
+            variant='hover'
+            component='a'
+            href='https://youtube.com/c/TheSkinnyCoder'
+            target='_blank'
+            color='red'
+          >
+            <YoutubeIcon fontSize='25px' />
+          </ActionIcon>
+        </Group>
+      </Stack>
+    </Group>
   )
 }

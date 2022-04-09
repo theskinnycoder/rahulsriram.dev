@@ -1,29 +1,41 @@
-import { css, Global } from '@emotion/react';
+import { Global } from '@mantine/core'
 
 const Fonts = () => (
   <Global
-    styles={css`
-      @font-face {
-        font-family: 'Neuzeit Grotesk Bold';
-        src: url('/fonts/NeuzeitGrotesk-Bold.woff2') format('woff2');
-        font-weight: normal;
-        font-style: normal;
-      }
-
-      @font-face {
-        font-family: 'Fira Code';
-        src: url('/fonts/FiraCode-Regular.woff2') format('woff2');
-        font-weight: normal;
-        font-style: normal;
-      }
-
-      @font-face {
-        font-family: 'Inter var';
-        src: url('/fonts/Inter.var.woff2') format('woff2');
-        font-weight: 100 900;
-      }
-    `}
+    styles={[
+      {
+        '@font-face': {
+          fontFamily: 'Neuzeit Grotesk',
+          src: `url('/fonts/NeuzeitGrotesk-Bold.woff2') format("woff2")`,
+          fontStyle: 'normal',
+        },
+      },
+      {
+        '@font-face': {
+          fontFamily: 'JetBrains Mono',
+          src: `url('/fonts/jbm.woff2') format("woff2")`,
+          fontWeight: 'normal',
+          fontStyle: 'normal',
+        },
+      },
+      {
+        '@font-face': {
+          fontFamily: 'IBM Plex Sans Var',
+          src: `url('/fonts/ibps.var.woff2') format("woff2")`,
+          fontWeight: '100 900',
+          fontStyle: 'normal',
+        },
+      },
+      {
+        '@font-face': {
+          fontFamily: 'IBM Plex Sans Var',
+          src: `url('/fonts/ibps-italic.var.woff2') format("woff2")`,
+          fontWeight: '100 900',
+          fontStyle: 'italic',
+        },
+      },
+    ]}
   />
-);
+)
 
-export default Fonts;
+export default Fonts

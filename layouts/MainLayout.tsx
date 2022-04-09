@@ -1,4 +1,4 @@
-import { Box, Container, Flex } from '@chakra-ui/react'
+import { Box, Container, Stack } from '@mantine/core'
 import { ReactChild } from 'react'
 import Header from '~/components/Header'
 
@@ -10,16 +10,26 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <>
       <Header />
-      <Container maxW='700px'>
-        <Box as='main' py={{ base: '4', md: '10' }}>
-          <Flex
+      <Container size='sm'>
+        <Box
+          component='main'
+          py='10'
+          sx={theme => ({
+            paddingBlock: theme.spacing.xl,
+          })}
+        >
+          <Stack
             align='center'
             justify='center'
-            direction='column'
-            px={{ base: '4', md: '0' }}
+            px={0}
+            sx={theme => ({
+              '@media (max-width: 768px)': {
+                paddingInline: theme.spacing.xs,
+              },
+            })}
           >
             {children}
-          </Flex>
+          </Stack>
         </Box>
       </Container>
     </>

@@ -11,10 +11,12 @@ import {
 } from '@mantine/core'
 import { useHover } from '@mantine/hooks'
 import NextLink from 'next/link'
-import { Article } from '~/lib/graphcms/__generated__'
 
-export default function BlogPost(post: Article) {
-  const { title, excerpt, slug, coverpic, categories } = post
+type YouTubeVideoCardProps = {
+  video: any
+}
+
+export default function YouTubeVideoCard({ video }: YouTubeVideoCardProps) {
   const { hovered, ref } = useHover()
 
   return (
@@ -35,15 +37,16 @@ export default function BlogPost(post: Article) {
     >
       <Card.Section
         component='a'
-        href={`/blog/${slug}`}
+        href={`https://www.youtube.com/watch?v=${video?.id?.videoId}`}
+        target='_blank'
         sx={{
           overflow: 'hidden',
         }}
       >
         <AspectRatio ratio={1920 / 1080}>
           <Image
-            src={coverpic?.url}
-            alt={title}
+            src={video?.snippet?.thumbnails?.high?.url}
+            alt={video?.snippet?.title}
             fit='contain'
             sx={{
               transition: 'all 0.2s ease-in-out',
@@ -55,7 +58,7 @@ export default function BlogPost(post: Article) {
       </Card.Section>
 
       <Stack spacing='xs' align='flex-start' justify='space-between' my='lg'>
-        <Group spacing='xs'>
+        {/* <Group spacing='xs'>
           {categories?.map((category, idx) => (
             <NextLink href='/' key={idx} passHref>
               <Badge
@@ -72,9 +75,12 @@ export default function BlogPost(post: Article) {
               </Badge>
             </NextLink>
           ))}
-        </Group>
-        <NextLink href={`/blog/${slug}`} passHref>
-          <Anchor variant='text'>
+        </Group> */}
+        <NextLink
+          href={`https://www.youtube.com/watch?v=${video?.id?.videoId}`}
+          passHref
+        >
+          <Anchor variant='text' target='_blank'>
             <Title
               order={3}
               mt={2}
@@ -84,7 +90,7 @@ export default function BlogPost(post: Article) {
                 maxLines: 2,
               })}
             >
-              {title}
+              {video?.snippet?.title}
             </Title>
           </Anchor>
         </NextLink>
@@ -95,7 +101,7 @@ export default function BlogPost(post: Article) {
             maxLines: 3,
           }}
         >
-          {excerpt}
+          {video.snippet.description}
         </Text>
       </Stack>
     </Card>

@@ -1,131 +1,94 @@
-import {
-  Avatar,
-  Box,
-  Container,
-  Flex,
-  Heading,
-  Icon,
-  Text,
-} from '@chakra-ui/react'
-import { formatDistanceToNow } from 'date-fns'
+import { Avatar, Box, Group, Stack, Text, Title } from '@mantine/core'
+import { MDXRemote } from 'next-mdx-remote'
 import { useRouter } from 'next/router'
-import readingTime from 'reading-time'
 import useSWR from 'swr'
 import SocialShareButtons from '~/components/pages/blog/SocialShareButtons'
-import { GitHubIcon } from '~/icons'
-import { Article, GetSingleArticleDocument } from '~/lib/graphcms/__generated__'
-import { getGqlString, graphqlFetcher } from '~/lib/swr'
-import { GRAPHCMS_END_POINT } from '~/utils/constants'
+import { Post } from '~/lib/mdx'
+import { fetcher } from '~/lib/swr'
+import MDXComponents from './MDXComponents'
 
 export default function BlogDetails() {
   const { asPath, query } = useRouter()
 
-  const { data: post } = useSWR<Article>(
-    [
-      GRAPHCMS_END_POINT,
-      getGqlString(GetSingleArticleDocument),
-      { slug: query?.slug },
-    ],
-    graphqlFetcher,
-  )
+  const slug = query.slug as string
+
+  const { data: post } = useSWR<Post>(`/api/blog/${slug}`, fetcher)
 
   return (
-    <Container
-      px='0'
-      maxW='container.xl'
-      display='flex'
-      flexDirection='column'
-      align='flex-start'
-      justify='center'
-      experimental_spaceY='2'>
+    <Stack px='0' spacing='lg'>
       {/* Title */}
-      <Heading fontSize={{ base: '3xl', md: '5xl' }} ml='-1'>
-        {post?.title}
-      </Heading>
+      <Title
+        order={1}
+        sx={theme => ({
+          fontSize: 2 * theme.fontSizes.xl,
+          color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+          '@media (max-width: 768px)': {
+            fontSize: theme.fontSizes.xl,
+          },
+        })}
+      >
+        {post?.meta?.title}
+      </Title>
 
       {/* Details */}
-      <Flex
-        py='3'
-        direction={['column', 'row']}
-        justify='space-between'
-        align={['flex-start', 'center']}
-        experimental_spaceY={{
-          base: '2',
-          md: '0',
-        }}>
+      <Group position='apart' align='flex-start'>
         {/* Avatar & Author Name */}
-        <Flex align='center' justify='center'>
+        <Group position='center' align='center' spacing='xs'>
           <Avatar
             size='sm'
-            name='Rahul SriRam'
+            radius='xl'
             src='https://avatars.githubusercontent.com/u/64031854?v=4'
           />
           <Text
-            fontWeight='medium'
-            fontSize={{ base: 'xs', md: 'sm' }}
-            ml='2'
-            color='gray.700'
-            _dark={{ color: 'gray.300' }}>
-            {'Rahul SriRam / '}
-            {formatDistanceToNow(new Date(post?.updatedAt!), {
-              addSuffix: true,
-              includeSeconds: true,
+            weight='500'
+            size='md'
+            sx={theme => ({
+              color:
+                theme.colorScheme === 'dark' ? theme.colors.gray[5] : 'initial',
+              fontSize: theme.fontSizes.md,
+              '@media (max-width: 768px)': {
+                fontSize: theme.fontSizes.xs,
+              },
             })}
+          >
+            {'Rahul SriRam / '}
+            {post?.meta?.date}
           </Text>
-        </Flex>
+        </Group>
 
         {/* Other Details */}
-        <Flex
-          justify='space-between'
-          align='center'
-          experimental_spaceX='2'
-          w={['full', 'auto']}>
+        <Group position='apart' align='center' spacing='xs'>
           <Text
-            fontWeight='medium'
-            fontSize={{ base: 'xs', md: 'sm' }}
-            color='gray.700'
-            _dark={{ color: 'gray.300' }}>
-            {readingTime(post?.content as string).text}
+            weight='500'
+            size='md'
+            sx={theme => ({
+              color:
+                theme.colorScheme === 'dark' ? theme.colors.gray[5] : 'initial',
+              fontSize: theme.fontSizes.md,
+              '@media (max-width: 768px)': {
+                fontSize: theme.fontSizes.xs,
+              },
+            })}
+          >
+            {post?.meta?.timeTaken}
           </Text>
 
           <SocialShareButtons
-            title={`${post?.title} by Rahul SriRam`}
+            title={`${post?.meta?.title} by Rahul SriRam`}
             hashtag='rahulsriram'
             path={asPath}
           />
-        </Flex>
-      </Flex>
+        </Group>
+      </Group>
 
       {/* Post Content */}
       <Box
-        pb='4'
-        color='gray.700'
-        fontWeight='medium'
-        _dark={{ color: 'gray.300' }}
-        style={{
-          lineHeight: '28px',
-        }}
-        fontSize={{
-          base: 'sm',
-          md: 'md',
-        }}>
-        {post?.content}
+        sx={theme => ({
+          wordBreak: 'break-word',
+        })}
+      >
+        <MDXRemote {...post?.content!} components={MDXComponents} />
       </Box>
-
-      {/* Edit on GitHub */}
-      <Flex
-        py='2'
-        className='group'
-        align='center'
-        experimental_spaceX='1'
-        display='inline-flex'>
-        <Icon
-          as={GitHubIcon}
-          mx='2px'
-          display='none'
-          _groupHover={{ display: 'inline-block' }}
-        />
-      </Flex>
-    </Container>
+    </Stack>
   )
 }

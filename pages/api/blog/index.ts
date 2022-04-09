@@ -4,10 +4,8 @@ import { Article } from '~/lib/graphcms/__generated__'
 
 export default async function handler(
   _req: NextApiRequest,
-  res: NextApiResponse<{
-    posts: Article[]
-  }>,
+  res: NextApiResponse<Article[]>,
 ) {
   const { articles } = await graphcmsClient.GetAllArticles()
-  res.status(200).json({ posts: articles as Article[] })
+  res.status(200).json(articles as Article[])
 }

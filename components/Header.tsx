@@ -1,4 +1,9 @@
-import { Button, Flex, Link } from '@chakra-ui/react'
+import {
+  Button,
+  Group,
+  MantineTheme,
+  useMantineColorScheme,
+} from '@mantine/core'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import { SettingsModalToggleButton } from './features/settings'
@@ -7,54 +12,89 @@ import links from './links'
 
 export default function Header() {
   const { asPath } = useRouter()
+  const { colorScheme } = useMantineColorScheme()
+
+  const linkColor = (theme: MantineTheme, url: string) => {
+    if (asPath === url) {
+      return colorScheme === 'light' ? 'black' : 'white'
+    } else {
+      return colorScheme === 'light'
+        ? theme.colors.dark[4]
+        : theme.colors.dark[1]
+    }
+  }
 
   return (
-    <Flex
-      justify='space-between'
-      align='center'
-      py={{ base: '4', md: '8' }}
-      px={{ base: 6, md: 0 }}
-      style={{ top: 0 }}
-      pos='sticky'
-      zIndex={10}
-      bg='transparent'
-      backdropFilter={`blur(10px)`}
-      maxW='700px'
-      mx='auto'>
-      <Flex
-        display={{ base: 'none', md: 'inline' }}
+    <Group
+      sx={{
+        background: 'transparent',
+        backdropFilter: 'blur(10px)',
+        zIndex: '10',
+        position: 'sticky',
+        top: 0,
+      }}
+    >
+      <Group
+        position='apart'
         align='center'
-        justify='center'
-        experimental_spaceX='1.5'
-        as='nav'>
-        {links.map(link => (
-          <Link href={link.url} as={NextLink} key={link.name} passHref>
-            <Button
-              as='a'
-              fontSize={['sm', 'md']}
-              variant='ghost'
-              size='sm'
-              color={asPath === link.url ? 'black' : 'gray.700'}
-              fontWeight={asPath === link.url ? 'bold' : 'medium'}
-              transition='ease-in-out 0.21s'
-              _hover={{
-                transition: 'ease-in-out 0.21s',
-                outline: '2px solid',
-                outlineColor: 'gray.700',
-              }}
-              _dark={{
-                color: asPath === link.url ? 'white' : 'gray.300',
-                _hover: {
-                  outlineColor: 'gray.300',
-                },
-              }}>
-              {link.name}
-            </Button>
-          </Link>
-        ))}
-      </Flex>
-      <SideBarToggleButton />
-      <SettingsModalToggleButton />
-    </Flex>
+        sx={theme => ({
+          paddingBlock: theme.spacing.xl,
+          maxWidth: '700px',
+          width: '100%',
+          '@media (max-width: 768px)': {
+            paddingInline: theme.spacing.xs,
+            paddingBlock: theme.spacing.xs,
+          },
+        })}
+        mx='auto'
+      >
+        <Group
+          sx={{
+            '@media (max-width: 768px)': {
+              display: 'none',
+            },
+          }}
+          align='center'
+          position='center'
+          spacing='xs'
+          ml={-14}
+        >
+          {links?.map(link => (
+            <NextLink key={link?.name} href={link?.url} passHref>
+              <Button
+                variant='subtle'
+                component='a'
+                size='sm'
+                sx={theme => ({
+                  fontSize: theme.fontSizes.md,
+                  color: linkColor(theme, link?.url),
+                  textDecoration: 'none',
+                  outline: 'none',
+                  fontWeight: asPath === link?.url ? '600' : '500',
+                  transition: 'all ease-in-out 0.2s',
+                  ':hover': {
+                    backgroundColor:
+                      theme.colorScheme === 'dark'
+                        ? theme.colors.gray
+                        : 'unset',
+                    outline:
+                      theme.colorScheme === 'light' ? '2px solid' : 'none',
+                    outlineColor:
+                      theme.colorScheme === 'light'
+                        ? theme.black
+                        : 'transparent',
+                    transition: 'all ease-in-out 0.2s',
+                  },
+                })}
+              >
+                {link?.name}
+              </Button>
+            </NextLink>
+          ))}
+        </Group>
+        <SideBarToggleButton />
+        <SettingsModalToggleButton />
+      </Group>
+    </Group>
   )
 }

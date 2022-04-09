@@ -1,27 +1,13 @@
-import {
-  Box,
-  Flex,
-  Grid,
-  Heading,
-  Icon,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Text,
-} from '@chakra-ui/react'
-import { useMemo, useState } from 'react'
+import { Input, SimpleGrid, Stack, Text, Title } from '@mantine/core'
+import { ChangeEvent, useMemo, useState } from 'react'
 import useSWR from 'swr'
 import BlogPost from '~/components/pages/blog/BlogPost'
 import { SearchIcon } from '~/icons'
-import { Article, GetAllArticlesDocument } from '~/lib/graphcms/__generated__'
-import { getGqlString, graphqlFetcher } from '~/lib/swr'
-import { GRAPHCMS_END_POINT } from '~/utils/constants'
+import { Article } from '~/lib/graphcms/__generated__'
+import { fetcher } from '~/lib/swr'
 
 export default function BlogsListing() {
-  const { data: posts } = useSWR<Article[]>(
-    [GRAPHCMS_END_POINT, getGqlString(GetAllArticlesDocument)],
-    graphqlFetcher,
-  )
+  const { data: posts } = useSWR<Article[]>('/api/blog', fetcher)
 
   const [searchValue, setSearchValue] = useState('')
 
@@ -39,60 +25,63 @@ export default function BlogsListing() {
   )
 
   return (
-    <Flex
-      direction='column'
-      experimental_spaceY='6'
-      justify='center'
-      align='flex-start'>
-      <Box experimental_spaceY='2'>
-        <Heading size='2xl'>The Blog.</Heading>
-        <Text
-          color='gray.700'
-          _dark={{
-            color: 'gray.300',
-          }}>
+    <Stack spacing='xl' justify='center' align='flex-start'>
+      <Stack spacing='sm'>
+        <Title
+          order={1}
+          sx={theme => ({
+            color: theme.colorScheme === 'light' ? theme.black : theme.white,
+          })}
+        >
+          The Blog.
+        </Title>
+        <Text>
           {`I've been writing online since 2020, mostly about web development and tech careers.
                 In total, I've written ${posts?.length} articles on this site.
                 Use the search below to filter by title.`}
         </Text>
-      </Box>
+      </Stack>
 
-      <InputGroup size='lg'>
-        <Input
-          variant='filled'
-          ring='none'
-          _focus={{
-            border: '2px solid',
-            borderColor: 'gray.700',
-          }}
-          _dark={{
-            _focus: {
-              borderColor: 'gray.300',
-            },
-          }}
-          value={searchValue}
-          onChange={e => setSearchValue(e.target.value)}
-          placeholder='Search for articles...'
-          type='text'
-        />
-        <InputRightElement
-          color='#9EA2AA'
-          _dark={{
-            color: '#4E4E50',
-          }}
-          children={<Icon as={SearchIcon} />}
-        />
-      </InputGroup>
+      <Input
+        variant='filled'
+        size='md'
+        value={searchValue}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          setSearchValue(e.target.value)
+        }
+        placeholder='Search for blog posts...'
+        rightSection={<SearchIcon />}
+        sx={theme => ({
+          width: '100%',
+          ':focus-within': {
+            outline: theme.focusRing,
+          },
+        })}
+      />
 
       {!filteredBlogPosts?.length ? (
-        <Text>No posts found 😞</Text>
+        <Title order={2} py='xl'>
+          I didn&apos;t write about that yet...😞
+        </Title>
       ) : (
-        <Grid gap={20} templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']}>
+        <SimpleGrid
+          spacing='xl'
+          breakpoints={[
+            {
+              maxWidth: 'xs',
+              cols: 1,
+            },
+            {
+              minWidth: 'xs',
+              cols: 2,
+            },
+          ]}
+        >
           {filteredBlogPosts?.map(post => (
             <BlogPost key={post.slug} {...post} />
           ))}
-        </Grid>
+        </SimpleGrid>
       )}
-    </Flex>
+    </Stack>
   )
 }

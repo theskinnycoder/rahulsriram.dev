@@ -3,6 +3,7 @@ export {
   BiFontFamily as FontIcon,
   BiSearchAlt as SearchIcon,
   BiSun as SunIcon,
+  BiNetworkChart as WorkIcon,
 } from 'react-icons/bi'
 export {
   BsCameraReels as CameraIcon,
@@ -23,10 +24,13 @@ export {
   FiTwitter as TwitterIcon,
   FiYoutube as YoutubeIcon,
 } from 'react-icons/fi'
-export { GoSettings as SettingsIcon } from 'react-icons/go'
 export {
   HiExternalLink as ExtLinkIcon,
   HiMenuAlt1 as MenuIcon,
+  HiChevronDoubleUp as ArrowUpIcon,
+  HiCode as CodeIcon,
+  HiOutlineAcademicCap as CollegeIcon,
+  HiOutlineAdjustments as SettingsIcon,
 } from 'react-icons/hi'
 export { MdCheckCircle as CheckIcon } from 'react-icons/md'
 export {

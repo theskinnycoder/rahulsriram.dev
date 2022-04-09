@@ -1,81 +1,69 @@
-import {
-  extendTheme,
-  theme as defaultTheme,
-  ThemeConfig,
-  withDefaultColorScheme,
-} from '@chakra-ui/react';
-
-const config: ThemeConfig = {
-  initialColorMode: 'light',
-  useSystemColorMode: true,
-};
-
-const brandColor = defaultTheme.colors.gray;
-
-const theme = extendTheme(
-  {
-    styles: {
-      global: (props: { colorMode: string }) => ({
-        body: {
-          bgColor: props.colorMode === 'dark' ? '#08070B' : '#F9FAFB',
-        },
-      }),
-    },
-    config,
-    fonts: {
-      heading: `Neuzeit Grotesk Bold, ${defaultTheme.fonts.heading}`,
-      body: `Inter var, ${defaultTheme.fonts.body}`,
-      mono: `Fira Code, ${defaultTheme.fonts.mono}`,
-    },
-    colors: {
-      brand: {
-        100: brandColor['100'],
-        200: brandColor['200'],
-        300: brandColor['300'],
-        400: brandColor['400'],
-        500: brandColor['500'],
-        600: brandColor['600'],
-        700: brandColor['700'],
-        800: brandColor['800'],
-        900: brandColor['900'],
-        50: brandColor['50'],
-      },
-    },
-    components: {
-      Button: {
-        baseStyle: {
-          _focus: {
-            ring: 'none',
-          },
-        },
-        variants: {
-          solid: () => ({
-            _hover: {
-              transform: 'scale(1.05)',
-            },
-            _focusWithin: {
-              transform: 'scale(0.95)',
-            },
-          }),
-        },
-      },
-      IconButton: {
-        baseStyle: {
-          _focus: {
-            ring: 'none',
-          },
-        },
-      },
-      Link: {
-        baseStyle: {
-          _focus: {
-            ring: 'none',
-          },
-        },
-      },
-    },
+const mantineTheme = {
+  colors: {
+    linkedin: [
+      '#E8F4F9',
+      '#CFEDFB',
+      '#9BDAF3',
+      '#68C7EC',
+      '#34B3E4',
+      '#00A0DC',
+      '#008CC9',
+      '#0077B5',
+      '#005E93',
+      '#004471',
+    ],
+    facebook: [
+      '#E8F4F9',
+      '#D9DEE9',
+      '#B7C2DA',
+      '#6482C0',
+      '#4267B2',
+      '#385898',
+      '#314E89',
+      '#29487D',
+      '#223B67',
+      '#1E355B',
+    ],
+    whatsapp: [
+      '#dffeec',
+      '#b9f5d0',
+      '#90edb3',
+      '#65e495',
+      '#3cdd78',
+      '#22c35e',
+      '#179848',
+      '#0c6c33',
+      '#01421c',
+      '#001803',
+    ],
+    twitter: [
+      '#E5F4FD',
+      '#C8E9FB',
+      '#A8DCFA',
+      '#83CDF7',
+      '#57BBF5',
+      '#1DA1F2',
+      '#1A94DA',
+      '#1681BF',
+      '#136B9E',
+      '#0D4D71',
+    ],
+    telegram: [
+      '#E3F2F9',
+      '#C5E4F3',
+      '#A2D4EC',
+      '#7AC1E4',
+      '#47A9DA',
+      '#0088CC',
+      '#007AB8',
+      '#006BA1',
+      '#005885',
+      '#003F5E',
+    ],
   },
-  withDefaultColorScheme({ colorScheme: 'brand' }),
-);
+  fontFamily: 'IBM Plex Sans Var, sans-serif',
+  fontFamilyMonospace: 'JetBrains Mono, Courier, monospace',
+  headings: { fontFamily: 'Neuzeit Grotesk, sans-serif' },
+}
 
-export default theme;
+export default mantineTheme

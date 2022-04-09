@@ -1,47 +1,30 @@
-import {
-  Divider,
-  Heading,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
-  useColorModeValue,
-  VStack,
-} from '@chakra-ui/react'
+import { Divider, Modal, Stack, Title } from '@mantine/core'
 import ColorModeSelector from '~/components/ColorModeSelector'
 
 type SettingsModalProps = {
-  isOpen: boolean
+  opened: boolean
   onClose: () => void
 }
 
-export default function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
-  const dividerColor = useColorModeValue('blackAlpha.500', 'whiteAlpha.500')
-
+export default function SettingsModal({ opened, onClose }: SettingsModalProps) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size='xl'>
-      <ModalOverlay bg='whiteAlpha.200' backdropFilter='blur(5px)' />
-      <ModalContent bg='transparent' backdropFilter={`blur(30px)`} p={3}>
-        <ModalHeader>
-          <Heading size='md'>Settings</Heading>
-        </ModalHeader>
-        <ModalCloseButton
-          autoFocus={false}
-          ring='none'
-          _focus={{ scale: 1.1 }}
-        />
-        <VStack
-          as={ModalBody}
-          align='start'
-          justify='center'
-          experimental_spaceY={3}>
-          <Divider borderColor={dividerColor} />
-          <ColorModeSelector />
-          <Divider borderColor={dividerColor} />
-        </VStack>
-      </ModalContent>
+    <Modal
+      sx={{
+        backdropFilter: 'blur(10px)',
+      }}
+      overlayOpacity={0}
+      shadow='xl'
+      opened={opened}
+      onClose={onClose}
+      size='xl'
+      title={<Title order={3}>Settings</Title>}
+      withCloseButton
+    >
+      <Stack align='start' justify='center' spacing='xl'>
+        <Divider />
+        <ColorModeSelector />
+        <Divider />
+      </Stack>
     </Modal>
   )
 }

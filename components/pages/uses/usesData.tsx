@@ -1,4 +1,3 @@
-import { Icon } from '@chakra-ui/react'
 import {
   AppleIcon,
   CameraIcon,
@@ -26,17 +25,17 @@ const usesData = {
       name: 'MacBook Pro (2021)',
       subText:
         'M1 Pro Processor, 10 core, 16GB RAM, 1TB SSD, 16-inch Display, Space Gray',
-      icon: <Icon boxSize='2em' as={AppleIcon} />,
+      icon: <AppleIcon fontSize='30px' />,
     },
     {
       name: 'Fifine K669B Condensor Mic',
       subText: '1.5W, 1.5m, 1.5m',
-      icon: <Icon boxSize='2em' as={MicIcon} />,
+      icon: <MicIcon fontSize='30px' />,
     },
     {
       name: 'Canon EOS 1200D',
       subText: 'EF-S 18-55mm IS STM Lens',
-      icon: <Icon boxSize='2em' as={CameraIcon} />,
+      icon: <CameraIcon fontSize='30px' />,
     },
   ],
   coding: [
@@ -45,79 +44,63 @@ const usesData = {
       subText: `${(<a href={VSCODE_SETTINGS_GIST_ID}>settings</a>)}. And ${(
         <a href={VSCODE_EXTENSIONS_BLOG_POST}>extensions</a>
       )}`,
-      icon: <Icon boxSize='2em' as={VSCodeIcon} color='#46AAE9' />,
+      icon: <VSCodeIcon fontSize='30px' color='#46AAE9' />,
     },
     {
       name: 'iTerm2',
       subText: {
         config: {},
       },
-      icon: (
-        <Icon
-          boxSize='2em'
-          as={ITermIcon}
-          color='green.600'
-          _dark={{ color: 'green.500' }}
-        />
-      ),
+      icon: <ITermIcon fontSize='30px' />,
     },
     {
       name: 'Fonts',
       subText: {},
-      icon: <Icon boxSize='2em' as={FontIcon} />,
+      icon: <FontIcon fontSize='30px' />,
     },
   ],
   software: [
     {
       name: 'Adobe Premiere Pro CC',
       subText: 'Video Editing',
-      icon: (
-        <Icon
-          boxSize='2em'
-          as={PremiereProIcon}
-          color='#000058'
-          _dark={{
-            color: '#9494F7',
-          }}
-        />
-      ),
+      icon: <PremiereProIcon fontSize='30px' color='#000058' />,
     },
     {
       name: 'Descript',
       subText: 'Audio Editing',
-      icon: <Icon boxSize='2em' as={DescriptIcon} color='#46AAE9' />,
+      icon: <DescriptIcon fontSize='30px' color='#46AAE9' />,
     },
     {
       name: 'Canva',
       subText: 'Poster & Thumbnail Design',
-      icon: <Icon as={CanvaIcon} boxSize='2em' color='#02C3CC' />,
+      icon: <CanvaIcon fontSize='30px' color='#02C3CC' />,
     },
     {
       name: 'Raycast',
       subText: 'Replacement for Spotlight',
-      icon: <Icon boxSize='2em' as={SpotlightIcon} color='#FF6161' />,
+      icon: <SpotlightIcon fontSize='30px' color='#FF6161' />,
     },
   ],
   work: [
     {
       name: 'GitHub',
       subText: 'Personal Favorite',
-      icon: <Icon as={GitHubIcon} boxSize='2em' />,
+      icon: <GitHubIcon fontSize='30px' />,
     },
     {
       name: 'GitLab',
       subText: 'For Work',
-      icon: <Icon as={GitLabIcon} boxSize='2em' color='#E24124' />,
+      icon: <GitLabIcon fontSize='30px' color='#E24124' />,
     },
     {
       name: 'Slack',
       subText: 'For Work',
-      icon: <Icon as={SlackIcon} boxSize='2em' />,
+      icon: <SlackIcon fontSize='30px' />,
     },
     {
       name: 'Discord',
       subText: 'For Community Building',
-      icon: <Icon as={DiscordIcon} boxSize='2em' color='#626DEC' />,
+      icon: <DiscordIcon fontSize='30px' color='#626DEC' />,
     },
   ],
 }

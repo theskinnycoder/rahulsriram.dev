@@ -1,68 +1,57 @@
-import {
-  Box,
-  Divider,
-  Flex,
-  Heading,
-  List,
-  ListItem,
-  Text,
-} from '@chakra-ui/react'
+import { Divider, List, Stack, Text, Title } from '@mantine/core'
 import usesData from '~/components/pages/uses/usesData'
 
 export default function UsesPage() {
   return (
-    <Flex
-      direction='column'
-      experimental_spaceY='6'
-      justify='center'
-      align='flex-start'>
-      <Box experimental_spaceY='2'>
-        <Heading size='2xl'>What I Use.</Heading>
-        <Text
-          color='gray.700'
-          _dark={{
-            color: 'gray.300',
-          }}>
+    <Stack spacing='sm' justify='center' align='flex-start'>
+      <Stack spacing='xs'>
+        <Title
+          order={1}
+          sx={theme => ({
+            color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+          })}
+        >
+          What I Use.
+        </Title>
+        <Text>
           I get lots of questions about what kind of hardware, software, desk
           setup, etc. that I use. Well, here ya go!
         </Text>
-      </Box>
-      <Flex
-        direction='column'
-        experimental_spaceY='6'
-        justify='center'
-        align='flex-start'>
+      </Stack>
+      <Stack spacing='md' justify='center' align='flex-start'>
         {Object.entries(usesData).map(([key, values]) => (
           <>
-            <Divider />
-            <Box key={key}>
-              <Heading size='xl' textTransform='capitalize' mb={2}>
+            <Divider my='sm' />
+            <div key={key}>
+              <Title
+                order={2}
+                sx={{
+                  textTransform: 'capitalize',
+                }}
+                mb='lg'
+              >
                 {key}
-              </Heading>
-              <List spacing={3}>
+              </Title>
+              <List spacing='lg'>
                 {values.map((value, idx) => (
-                  <ListItem
-                    key={idx}
-                    display='flex'
-                    alignItems='center'
-                    justifyContent='start'
-                    experimental_spaceX={5}>
-                    {value['icon']}
-                    <Box>
-                      <Text fontSize='xl' fontWeight='medium'>
-                        {value['name']}
-                      </Text>
-                      {typeof value['subText'] === 'string' && (
-                        <Text>{value['subText']}</Text>
+                  <List.Item icon={value.icon} key={idx}>
+                    <div
+                      style={{
+                        marginTop: '-0.5rem',
+                      }}
+                    >
+                      <Text weight='600'>{value['name']}</Text>
+                      {typeof value.subText === 'string' && (
+                        <Text>{value.subText}</Text>
                       )}
-                    </Box>
-                  </ListItem>
+                    </div>
+                  </List.Item>
                 ))}
               </List>
-            </Box>
+            </div>
           </>
         ))}
-      </Flex>
-    </Flex>
+      </Stack>
+    </Stack>
   )
 }

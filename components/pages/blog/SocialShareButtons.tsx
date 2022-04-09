@@ -1,15 +1,5 @@
-import {
-  Flex,
-  IconButton,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-  useColorMode,
-} from '@chakra-ui/react'
+import { ActionIcon, Group, Popover, Text } from '@mantine/core'
+import { useState } from 'react'
 import {
   FacebookShareButton,
   LinkedinShareButton,
@@ -37,132 +27,99 @@ export default function SocialShareButtons({
   title: string
   hashtag: string
 }) {
-  const { colorMode } = useColorMode()
+  const [opened, setOpened] = useState(false)
 
   return (
-    <Popover placement='bottom-end' isLazy>
-      <PopoverTrigger aria-label='Share this article'>
-        <IconButton
-          rounded='10px'
-          _hover={{
-            border: '2px solid',
-            borderColor: 'gray.600',
-          }}
-          _dark={{
-            _hover: {
-              border: '2px solid',
-              borderColor: 'gray.300',
-            },
-          }}
-          fontSize={{ base: 'lg', md: 'xl' }}
-          color={colorMode === 'light' ? 'gray.600' : 'gray.300'}
-          aria-label='Open Share Options'
-          icon={<ShareIcon />}
-          variant='ghost'
-        />
-      </PopoverTrigger>
-      <PopoverContent
-        bgColor='white'
-        _dark={{
-          bgColor: '#08070B',
-        }}
-        _focus={{
-          ring: 'none',
-        }}>
-        <PopoverHeader fontWeight='semibold'>
-          Share this article...
-        </PopoverHeader>
-        <PopoverArrow bgColor={colorMode === 'light' ? 'white' : '#08070B'} />
-        <PopoverCloseButton
-          autoFocus={false}
-          ring='none'
-          _focus={{ scale: 1.1 }}
-        />
-        <PopoverBody>
-          <Flex display='inline-flex' align='center' justify='center'>
-            {/* Twitter */}
-            <TwitterShareButton
-              url={`https://rahulsriram.dev${path}`}
-              title={title}>
-              <IconButton
-                variant='ghost'
-                rounded='10px'
-                colorScheme='twitter'
-                aria-label='Share article on Twitter'
-                icon={<TwitterFilledIcon />}
-              />
-            </TwitterShareButton>
+    <Popover
+      withArrow
+      withCloseButton
+      opened={opened}
+      onClose={() => setOpened(false)}
+      placement='end'
+      position='bottom'
+      target={
+        <>
+          <ActionIcon
+            size='lg'
+            radius='md'
+            onClick={() => setOpened(o => !o)}
+            sx={theme => ({
+              color:
+                theme.colorScheme === 'dark' ? theme.colors.gray[5] : 'initial',
+              '@media (max-width: 768px)': {
+                fontSize: theme.fontSizes.xs,
+              },
+            })}
+          >
+            <ShareIcon />
+          </ActionIcon>
+        </>
+      }
+    >
+      <Text weight='600' mb='xs'>
+        Share this article...
+      </Text>
+      <Group position='center' align='center' spacing='xs'>
+        {/* Twitter */}
+        <TwitterShareButton
+          url={`https://rahulsriram.dev${path}`}
+          title={title}
+        >
+          <ActionIcon color='twitter' size='lg' radius='md'>
+            <TwitterFilledIcon />
+          </ActionIcon>
+        </TwitterShareButton>
 
-            {/* FaceBook */}
-            <FacebookShareButton
-              url={`https://rahulsriram.dev${path}`}
-              quote={title}
-              hashtag={hashtag}>
-              <IconButton
-                variant='ghost'
-                rounded='10px'
-                colorScheme='facebook'
-                aria-label='Share article on FaceBook'
-                icon={<FacebookFilledIcon />}
-              />
-            </FacebookShareButton>
+        {/* FaceBook */}
+        <FacebookShareButton
+          url={`https://rahulsriram.dev${path}`}
+          quote={title}
+          hashtag={hashtag}
+        >
+          <ActionIcon color='facebook' size='lg' radius='md'>
+            <FacebookFilledIcon />
+          </ActionIcon>
+        </FacebookShareButton>
 
-            {/* Reddit */}
-            <RedditShareButton
-              url={`https://rahulsriram.dev${path}`}
-              title={title}>
-              <IconButton
-                variant='ghost'
-                rounded='10px'
-                colorScheme='red'
-                aria-label='Share article on Reddit'
-                icon={<RedditIcon />}
-              />
-            </RedditShareButton>
+        {/* Reddit */}
+        <RedditShareButton url={`https://rahulsriram.dev${path}`} title={title}>
+          <ActionIcon color='red' size='lg' radius='md'>
+            <RedditIcon />
+          </ActionIcon>
+        </RedditShareButton>
 
-            {/* WhatsApp */}
-            <WhatsappShareButton
-              url={`https://rahulsriram.dev${path}`}
-              title={title}
-              separator='-'>
-              <IconButton
-                variant='ghost'
-                rounded='10px'
-                colorScheme='whatsapp'
-                aria-label='Share article on Whatsapp'
-                icon={<WhatsAppIcon />}
-              />
-            </WhatsappShareButton>
+        {/* WhatsApp */}
+        <WhatsappShareButton
+          url={`https://rahulsriram.dev${path}`}
+          title={title}
+          separator='-'
+        >
+          <ActionIcon color='whatsapp' size='lg' radius='md'>
+            <WhatsAppIcon />
+          </ActionIcon>
+        </WhatsappShareButton>
 
-            {/* LinkedIn */}
-            <LinkedinShareButton
-              url={`https://rahulsriram.dev${path}`}
-              title={title}
-              summary='Do check out other articles on this blog!'>
-              <IconButton
-                variant='ghost'
-                rounded='10px'
-                colorScheme='linkedin'
-                aria-label='Share article on LinkedIn'
-                icon={<LinkedInFilledIcon />}
-              />
-            </LinkedinShareButton>
+        {/* LinkedIn */}
+        <LinkedinShareButton
+          url={`https://rahulsriram.dev${path}`}
+          title={title}
+          summary='Do check out other articles on this blog!'
+        >
+          <ActionIcon color='linkedin' size='lg' radius='md'>
+            <LinkedInFilledIcon />
+          </ActionIcon>
+        </LinkedinShareButton>
 
-            {/* Telegram */}
-            <TelegramShareButton
-              url={`https://rahulsriram.dev${path}`}
-              title={title}>
-              <IconButton
-                variant='ghost'
-                rounded='10px'
-                colorScheme='telegram'
-                aria-label='Share article on Telegram'
-                icon={<TelegramIcon />}
-              />
-            </TelegramShareButton>
-          </Flex>
-        </PopoverBody>
-      </PopoverContent>
+        {/* Telegram */}
+        <TelegramShareButton
+          url={`https://rahulsriram.dev${path}`}
+          title={title}
+        >
+          <ActionIcon color='telegram' size='lg' radius='md'>
+            <TelegramIcon />
+          </ActionIcon>
+        </TelegramShareButton>
+      </Group>
     </Popover>
   )
 }
